@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: './main.tsx',
-  devtool: 'inline-source-map',
+  devtool: false,
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js'
