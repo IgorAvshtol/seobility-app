@@ -67,6 +67,7 @@ export const Form: FC = () => {
             value={values.password}
             name='password'
             onChange={handleChange}
+            required
         />
         {errors.password && <p className={style.error}>{errors.password}</p>}
         <TelephoneNumberField loading={loading} onChange={handleChange} value={values.phone} error={errors.phone}/>
