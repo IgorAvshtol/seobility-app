@@ -5,6 +5,7 @@ import { IUser } from 'components/interfaces';
 import { messageValidateService } from 'services/messageValidateService';
 
 type IFormFields = 'name' | 'phone' | 'email' | 'password' | 'date' | 'message'
+const fieldsFrom = ['name', 'phone', 'email', 'password', 'date', 'message'];
 
 interface ErrorRecord {
   name?: string;
@@ -12,7 +13,7 @@ interface ErrorRecord {
   email?: string;
   password?: string;
   date?: string;
-  comment?: string;
+  message?: string;
 }
 
 export const useForm = () => {
@@ -20,67 +21,87 @@ export const useForm = () => {
   const [values, setValues] = useState<IUser>({} as IUser);
   const [errors, setErrors] = useState<ErrorRecord>({});
 
-  const validate = (event: ChangeEvent<HTMLInputElement>, name: IFormFields, value: string) => {
-
+  const validate = (name: IFormFields, value: string) => {
     switch (name) {
       case 'name':
-        if (!nameValidateService(value)) {
-          setErrors({
-            ...errors,
-            name: 'This field must contain the First Name and Last Name and consist of only two words, at least 3 characters long and no more than 30.',
+        if (!value || !nameValidateService(value)) {
+          setErrors((prev) => {
+                return {
+                  ...prev,
+                  name: 'This field must contain the First Name and Last Name and consist of only two words, at least 3 characters long and no more than 30.',
+                };
+              }
+          );
+        } else {
 
+          setErrors((prev) => {
+            const { name, ...other } = prev;
+            return other;
           });
-        } else {
-          const { name, ...other } = errors;
-          setErrors(other);
         }
-        break;
+        return;
       case 'email':
-        if (!new RegExp('^[A-Z\\d._%+-]+@[A-Z\\d-]+.+.[A-Z]{2,4}$', 'i').test(value)) {
-          setErrors({
-            ...errors,
-            email: 'Incorrect email!'
+        if (!value || !new RegExp('^[A-Z\\d._%+-]+@[A-Z\\d-]+.+.[A-Z]{2,4}$', 'i').test(value)) {
+          setErrors((prev) => {
+            return {
+              ...prev,
+              email: 'Incorrect email!'
+            };
           });
         } else {
-          const { email, ...other } = errors;
-          setErrors(other);
+          setErrors((prev) => {
+            const { email, ...other } = prev;
+            return other;
+          });
         }
-        break;
+        return;
       case 'password':
-        if (value.length < 6) {
-          setErrors({
-            ...errors,
-            password: 'The password needs to be at least 6 characters long.'
+        if (!value || value.length < 6) {
+          setErrors((prev) => {
+            return {
+              ...prev,
+              password: 'The password needs to be at least 6 characters long.'
+            };
           });
         } else {
-          const { password, ...other } = errors;
-          setErrors(other);
+          setErrors((prev) => {
+            const { password, ...other } = prev;
+            return other;
+          });
         }
-        break;
+        return;
       case 'phone':
-        if (value.length !== 19) {
-          setErrors({
-            ...errors,
-            phone: 'Phone number must be 11 digits.'
+        if (!value || value.length < 18) {
+          setErrors((prev) => {
+            return {
+              ...prev,
+              phone: 'Phone number must be 11 digits.'
+            };
           });
         } else {
-          const { phone, ...other } = errors;
-          setErrors(other);
+          setErrors((prev) => {
+            const { phone, ...other } = prev;
+            return other;
+          });
         }
-        break;
+        return;
       case 'message':
-        if (!messageValidateService(value)) {
-          setErrors({
-            ...errors,
-            comment: 'Comment must be at least 6 characters and not more than 300.'
+        if (!value || !messageValidateService(value)) {
+          setErrors((prev) => {
+            return {
+              ...prev,
+              message: 'Comment must be at least 6 characters and not more than 300.'
+            };
           });
         } else {
-          const { comment, ...other } = errors;
-          setErrors(other);
+          setErrors((prev) => {
+            const { message, ...other } = prev;
+            return other;
+          });
         }
-        break;
+        return;
       default:
-        break;
+        return;
     }
   };
 
@@ -90,7 +111,7 @@ export const useForm = () => {
     const name = e.target.name as IFormFields;
     const val = name === 'name' ? e.target.value.toUpperCase() : e.target.value;
 
-    validate(e, name, val);
+    validate(name, val);
 
     setValues({
       ...values,
@@ -101,6 +122,10 @@ export const useForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    for (let i = 0; i < fieldsFrom.length; i++) {
+      const key = fieldsFrom[i] as IFormFields;
+      validate(key, values[key]);
+    }
   };
 
   return {

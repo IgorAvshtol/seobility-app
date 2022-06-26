@@ -28,5 +28,5 @@ export const usePostData = <T>(url?: string) => {
     }
   };
 
-  return { data, loading, errorResponse, getResponseData: sendData };
+  return { data, loading, setLoading, errorResponse, getResponseData: sendData };
 };

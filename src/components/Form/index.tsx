@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 
 import style from './Form.module.scss';
 import { useForm } from 'hooks/useForm';
@@ -14,11 +14,22 @@ export const Form: FC = () => {
     getResponseData
   } = usePostData<IResponseData>(process.env.REACT_APP_BASE_URL as string);
   const { values, setValues, handleSubmit, errors, handleChange } = useForm();
+  const [formContainsFieldsWithError, setFormContainsFieldsWithError] = useState(false);
 
   const onSubmitButtonHandler = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmit(e);
-    await getResponseData(values);
+    if (!formContainsFieldsWithError) {
+      await getResponseData(values);
+    }
   };
+
+  useEffect(() => {
+    if (Object.values(errors).length !== 0 || Object.values(values).some(value => value === '')) {
+      setFormContainsFieldsWithError(true);
+    } else {
+      setFormContainsFieldsWithError(false);
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (loading === TypeLoadingStatus.IS_RESOLVE) setValues({
@@ -66,7 +77,6 @@ export const Form: FC = () => {
               name='date'
               value={values.date}
               onChange={handleChange}
-              required
           />
         </div>
 
@@ -77,12 +87,14 @@ export const Form: FC = () => {
             value={values.message}
             onChange={handleChange}
         />
-        {errors.comment && <p className={style.error}>{errors.comment}</p>}
+        {errors.message && <p className={style.error}>{errors.message}</p>}
         {loading === TypeLoadingStatus.IS_PENDING && <p className={style.loading}>Loading....</p>}
         {loading !== TypeLoadingStatus.IS_PENDING &&
             <button type='submit' className={style.buttonSubmit}>
               Submit
-            </button>}
+            </button>
+
+        }
         {errorResponse && <p className={style.errorResponse}>Not found</p>}
         {data &&
             <ul>

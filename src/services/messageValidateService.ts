@@ -1,4 +1,4 @@
-export function messageValidateService(comment: string): boolean {
-  const trimmedText = comment.replace(/\s+/g, ' ').trim();
+export function messageValidateService(message: string): boolean {
+  const trimmedText = message.replace(/\s+/g, ' ').trim();
   return (trimmedText.length >= 6 && trimmedText.length < 300) || trimmedText === '';
 }
