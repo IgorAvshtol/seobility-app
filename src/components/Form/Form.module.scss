@@ -1,0 +1,81 @@
+.registrationWrapper {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: auto;
+  max-width: 300px;
+  padding: 30px;
+  border-radius: 5px;
+  border: 1px solid #16324f69;
+  background-color: #fff;
+
+  input, textarea {
+    margin: 15px auto;
+    width: 100%;
+  }
+
+  h1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  textarea {
+    height: 140px;
+  }
+
+  input, textarea {
+    border: none;
+    outline: none;
+    resize: none;
+  }
+
+  input, textarea {
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(22, 50, 79, 0.41);
+  }
+
+  input:focus {
+    border-bottom: 1px solid rgb(22, 50, 79);
+  }
+
+  textarea:focus {
+    border-bottom: 1px solid rgb(22, 50, 79);
+  }
+
+  .buttonSubmit {
+    cursor: pointer;
+    outline: none;
+    width: 140px;
+    height: 30px;
+    margin: 15px auto;
+    background-color: #16324f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+
+  .error {
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    color: #db222a;
+  }
+
+  .errorResponse {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    color: red;
+  }
+
+  .loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
