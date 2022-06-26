@@ -1,3 +1,5 @@
+## npm run dev  
+
 # Before you start please read this small article
 
 ## What was done:
@@ -22,6 +24,6 @@ Form requirements:
 * Sending occurs Ajax request to the server. The response should contain json with 2 possible statuses: error/success and error text/”successful submission”. The response must be processed on the front and the corresponding message should be displayed under the form.
 * Until a response is received from the server, the form cannot be resubmitted.
 * In case of a successful response from the server, clear all form fields.
-All validation must be written independently, without the use of third-party libraries.
+* All validation must be written independently, without the use of third-party libraries.
 Form fields must be validated during entry and before being sent to the server.
 If the field does not pass validation, display an appropriate message below the field.
