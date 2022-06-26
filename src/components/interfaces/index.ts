@@ -4,7 +4,7 @@ export interface IUser {
   email: string;
   password: string;
   date: string;
-  comment: string;
+  message: string;
 }
 
 export interface IResponseData {
@@ -13,7 +13,7 @@ export interface IResponseData {
   email: string;
   password: string;
   date: string;
-  comment: string;
+  message: string;
   id: number;
 }
 

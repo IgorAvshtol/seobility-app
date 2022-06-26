@@ -26,6 +26,12 @@
     height: 140px;
   }
 
+  input[type='date'] {
+    margin: 0;
+    width: 170px;
+    color: gray;
+  }
+
   input, textarea {
     border: none;
     outline: none;
@@ -77,5 +83,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  .dateBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: gray;
   }
 }

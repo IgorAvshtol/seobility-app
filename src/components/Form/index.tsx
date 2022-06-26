@@ -25,7 +25,7 @@ export const Form: FC = () => {
       name: '',
       password: '',
       date: '',
-      comment: '',
+      message: '',
       email: '',
       phone: ''
     });
@@ -59,18 +59,22 @@ export const Form: FC = () => {
         />
         {errors.password && <p className={style.error}>{errors.password}</p>}
         <TelephoneNumberField loading={loading} onChange={handleChange} value={values.phone} error={errors.phone}/>
-        <input
-            type='date'
-            name='date'
-            value={values.date}
-            onChange={handleChange}
-            required
-        />
+        <div className={style.dateBlock}>
+          <p>Your birthday:</p>
+          <input
+              type='date'
+              name='date'
+              value={values.date}
+              onChange={handleChange}
+              required
+          />
+        </div>
+
         {errors.date && <p className={style.error}>{errors.date}</p>}
         <textarea
-            placeholder='Comment text'
-            name='comment'
-            value={values.comment}
+            placeholder='Message'
+            name='message'
+            value={values.message}
             onChange={handleChange}
         />
         {errors.comment && <p className={style.error}>{errors.comment}</p>}
@@ -86,7 +90,7 @@ export const Form: FC = () => {
               <li>{data.email}</li>
               <li>{data.phone}</li>
               <li>{data.date}</li>
-              <li>{data.comment}</li>
+              <li>{data.message}</li>
             </ul>
         }
       </form>

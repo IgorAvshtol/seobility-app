@@ -4,7 +4,7 @@ import { nameValidateService } from 'services/nameValidateService';
 import { IUser } from 'components/interfaces';
 import { messageValidateService } from 'services/messageValidateService';
 
-type IFormFields = 'name' | 'phone' | 'email' | 'password' | 'date' | 'comment'
+type IFormFields = 'name' | 'phone' | 'email' | 'password' | 'date' | 'message'
 
 interface ErrorRecord {
   name?: string;
@@ -68,7 +68,7 @@ export const useForm = () => {
           setErrors(other);
         }
         break;
-      case 'comment':
+      case 'message':
         if (!messageValidateService(value)) {
           setErrors({
             ...errors,
