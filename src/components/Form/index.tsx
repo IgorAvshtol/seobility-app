@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect } from 'react';
 
 import style from './Form.module.scss';
 import { useForm } from 'hooks/useForm';
@@ -14,34 +14,24 @@ export const Form: FC = () => {
     getResponseData
   } = usePostData<IResponseData>(process.env.REACT_APP_BASE_URL as string);
   const { values, setValues, handleSubmit, errors, handleChange } = useForm();
-  const [formContainsFieldsWithError, setFormContainsFieldsWithError] = useState(false);
 
   const onSubmitButtonHandler = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmit(e);
-    if (!formContainsFieldsWithError) {
-      await getResponseData(values);
-    }
+    await getResponseData(values);
   };
 
   useEffect(() => {
-    if (Object.values(errors).length !== 0 || Object.values(values).some(value => value === '')) {
-      setFormContainsFieldsWithError(true);
-    } else {
-      setFormContainsFieldsWithError(false);
+    if (loading === TypeLoadingStatus.IS_RESOLVE) {
+      setValues({
+        name: '',
+        password: '',
+        date: '',
+        message: '',
+        email: '',
+        phone: ''
+      });
     }
-  }, [errors]);
-
-  useEffect(() => {
-    if (loading === TypeLoadingStatus.IS_RESOLVE) setValues({
-      name: '',
-      password: '',
-      date: '',
-      message: '',
-      email: '',
-      phone: ''
-    });
   }, [loading]);
-
   return (
       <form className={style.registrationWrapper} onSubmit={onSubmitButtonHandler}>
         <h1 className={style.title}>Sign Up</h1>
@@ -91,7 +81,7 @@ export const Form: FC = () => {
         {errors.message && <p className={style.error}>{errors.message}</p>}
         {loading === TypeLoadingStatus.IS_PENDING && <p className={style.loading}>Loading....</p>}
         {loading !== TypeLoadingStatus.IS_PENDING &&
-            <button type='submit' className={style.buttonSubmit}>
+            <button type='submit' className={style.buttonSubmit} disabled={Object.values(errors).length !== 0}>
               Submit
             </button>
 
@@ -102,7 +92,7 @@ export const Form: FC = () => {
               <li>{data.name}</li>
               <li>{data.email}</li>
               <li>{data.phone}</li>
-              <li>{data.date}</li>
+              {data.date && <li>{data.date}</li>}
               <li>{data.message}</li>
             </ul>
         }
