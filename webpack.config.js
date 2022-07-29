@@ -6,7 +6,7 @@ module.exports = {
   entry: './main.tsx',
   devtool: false,
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/build'),
     filename: 'bundle.js'
   },
   devServer: {
