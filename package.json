@@ -5,8 +5,7 @@
   "main": "main.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --open --mode development --hot",
-    "build": "webpack --mode production"
+    "start": "webpack-dev-server --open --mode development --hot"
   },
   "author": "",
   "license": "ISC",
