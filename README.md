@@ -1,7 +1,7 @@
 ## npm run dev  
 
 # Before you start please read this small article
-
+https://seobility-test-deploy-p92o.vercel.app/
 ## What was done:
 * It's a test task of a Seobility company;
 ## Technologies used:
